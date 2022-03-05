@@ -18,7 +18,7 @@ const App: React.FC = () => {
   let serialNumbers: string[] = ["FA-AA-AAAM"];
 
   let map: Map = new Map({
-    target: 'map',
+    target: 'root',
     layers: [
         new TileLayer({
           source: new OSM()
@@ -36,14 +36,11 @@ const App: React.FC = () => {
   const upperXY: Coordinate = transform(upper, 'EPSG:4326', 'EPSG:3857');
   const extent: Coordinate = lowerXY.concat(upperXY);
   const center: Coordinate = getCenterOfExtent(extent);
-  map.getView().setCenter(center);
-  map.getView().fit(extent);
-  
   const canvas = document.createElement('canvas');
-  let markerOverlay: Overlay;
 
   useEffect(() => {
-    console.log(canvas);
+    map.getView().setCenter(center);
+    map.getView().fit(extent);
     canvas.id = "a_boat";
     canvas.width = 20;
     canvas.height = 20;
@@ -53,7 +50,7 @@ const App: React.FC = () => {
     document.body.appendChild(canvas);
   })
 
-  markerOverlay = new Overlay({
+  let markerOverlay: Overlay = new Overlay({
     element: canvas,
     positioning: 'center-center',
     stopEvent: false,
@@ -89,7 +86,7 @@ const App: React.FC = () => {
   }, 1000);
 
   return (
-    <div id="map"></div>
+    <></>
   );
 }
 
